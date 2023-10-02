@@ -1,10 +1,10 @@
-import { Movie } from "./movie";
+import { MovieInterface } from "./movies/MovieInterface";
 
 export class Rental {
-  private movie: Movie;
+  private movie: MovieInterface;
   private daysRented: number;
 
-  public constructor(movie: Movie, daysRented: number) {
+  public constructor(movie: MovieInterface, daysRented: number) {
     this.movie = movie;
     this.daysRented = daysRented;
   }
@@ -13,7 +13,19 @@ export class Rental {
     return this.daysRented;
   }
 
-  public getMovie(): Movie {
+  public getMovie(): MovieInterface {
     return this.movie;
+  }
+
+  public computeOwedMoney(): number {
+    return this.getMovie().computeRentalPrice(this.getDaysRented());
+  }
+
+  public computeRenterPoints(): number {
+    return this.getMovie().computeRenterPoints(this.getDaysRented());
+  }
+
+  public generateRentalRecord(): string {
+    return "\t" + this.getMovie().getTitle() + "\t" + this.computeOwedMoney().toFixed(1) + "\n";
   }
 }
